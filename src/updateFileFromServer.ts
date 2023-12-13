@@ -157,6 +157,11 @@ async function getServerData(todoistQuery: string, authToken: string, showSubtas
 		})
 	}
 
+	// close the tasks so they don't show up next time
+	tasks.forEach(t => {
+		api.closeTask(t.id);
+	})
+
 	return returnString;
 }
 
