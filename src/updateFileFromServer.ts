@@ -200,20 +200,10 @@ function getSubTasks(subtasks: Task[], parentId: string, indent: number): string
 }
 
 function getFormattedTaskDetail(task: Task, indent: number, showSubtaskSymbol: boolean): string {	
-	let description = getTaskDescription(task.description, indent);
-	let tabs = "\t".repeat(indent);
-
-	// used to fix the difference between the app and API (https://github.com/Doist/todoist-python/issues/18)
-	const priorityMap = new Map<number, number>([
-		[1, 4],
-		[2, 3],
-		[3, 2],
-		[4, 1]
-	])
-
+	const tabs = "\t".repeat(indent);
 	const subtaskIndicator = (showSubtaskSymbol && task.parentId != null) ? "⮑ " : "";
 
-	return `${tabs}- [ ] ${subtaskIndicator}${task.content} -- p${priorityMap.get(task.priority)} -- [src](${task.url}) ${description}\n`;
+	return `${tabs}- [ ] ${subtaskIndicator}${task.content} #todo \n`;
 }
 
 function getTaskDescription(description: string, indent: number): string {
