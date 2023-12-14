@@ -14,12 +14,13 @@ export interface TodoistSettings {
 export interface keywordTodoistQuery {
 	keyword: string;
 	todoistQuery: string;
+	meta: string;
 }
 
 export const DEFAULT_SETTINGS: TodoistSettings = {
 	settingsVersion: 2,
 	excludedDirectories: [],
-	keywordToTodoistQuery: [{keyword: "@@TODOIST@@", todoistQuery: "today|overdue"}],
+	keywordToTodoistQuery: [{keyword: "@@TODOIST@@", todoistQuery: "today|overdue", meta: ""}],
 	authToken: "TODO - get your auth token",
 	enableAutomaticReplacement: true,
 	showSubtasks: true

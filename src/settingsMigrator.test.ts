@@ -16,7 +16,7 @@ test('v0 to v2 migration', () => {
 			"old_exc_dir"
 		],
 		"keywordToTodoistQuery": [
-			{"keyword": "old_custom_template", "todoistQuery": "old_todoist_query"},
+			{"keyword": "old_custom_template", "todoistQuery": "old_todoist_query", "meta": ""},
 		],
 		"settingsVersion": 2,
 		"showSubtasks": true,
@@ -39,7 +39,7 @@ test('v1 to v2 migration', () => {
 			"old_exc_dir"
 		],
 		keywordToTodoistQuery: [
-			{"keyword": "old_custom_template", "todoistQuery": "old_todoist_query"},
+			{"keyword": "old_custom_template", "todoistQuery": "old_todoist_query", "meta": ""},
 		],
 		settingsVersion: 2,
 		showSubtasks: true,
@@ -56,10 +56,9 @@ test('v2 custom to v2 migration', () => {
 		authToken: "some_auth_token",
 		enableAutomaticReplacement: false,
 		excludedDirectories: ["some_exc_dir"],
-		keywordToTodoistQuery: [{keyword: "key_a", todoistQuery: "query_a"}, {keyword: "key_b", todoistQuery: "query_b"}],
+		keywordToTodoistQuery: [{keyword: "key_a", todoistQuery: "query_a", meta: "meta_a"}, {keyword: "key_b", todoistQuery: "query_b", meta: "meta_b"}],
 		settingsVersion: 2,
 		showSubtasks: false
 	}
 	expect(migrateSettings(v1alreadySetSettings)).toStrictEqual(v1alreadySetSettings)
 })
-

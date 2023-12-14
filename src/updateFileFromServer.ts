@@ -23,7 +23,7 @@ export async function updateFileFromServer(settings: TodoistSettings, app: App) 
 			console.log("Todoist Text: Updating keyword with todos. If this happened automatically and you did not intend for this " +
 				"to happen, you should either disable automatic replacement of your keyword with todos (via the settings), or" +
 				" exclude this file from auto replace (via the settings).")
-			const formattedTodos = await getServerData(keywordToQuery.todoistQuery, settings.authToken, settings.showSubtasks);
+			const formattedTodos = await getServerData(keywordToQuery.todoistQuery, settings.authToken, settings.showSubtasks, keywordToQuery.meta);
 
 			// re-read file contents to reduce race condition after slow server call
 			fileContents = await app.vault.read(file)
@@ -122,7 +122,7 @@ export async function toggleServerTaskStatus(e: Editor, settings: TodoistSetting
 	}
 }
 
-async function getServerData(todoistQuery: string, authToken: string, showSubtasks: boolean): Promise<string> {
+async function getServerData(todoistQuery: string, authToken: string, showSubtasks: boolean, meta: string): Promise<string> {
 	const api = new TodoistApi(authToken)
 
 	const tasks = await callTasksApi(api, todoistQuery);
@@ -136,8 +136,8 @@ async function getServerData(todoistQuery: string, authToken: string, showSubtas
 		// work through all the parent tasks
 		const parentTasks = tasks.filter(task => task.parentId == null);
 		parentTasks.forEach(task => {
-			returnString = returnString.concat(getFormattedTaskDetail(task, 0, false));
-			returnString = returnString.concat(getSubTasks(tasks, task.id, 1));
+			returnString = returnString.concat(getFormattedTaskDetail(task, 0, false, meta));
+			returnString = returnString.concat(getSubTasks(tasks, task.id, 1, meta));
 		})
 
 		// determine subtasks that have a parent that wasn't returned in the query
@@ -146,14 +146,14 @@ async function getServerData(todoistQuery: string, authToken: string, showSubtas
 
 		// show the orphaned subtasks with a subtask indicator
 		orphans.forEach(task => {
-			returnString = returnString.concat(getFormattedTaskDetail(task, 0, true));
-			returnString = returnString.concat(getSubTasks(tasks, task.id, 1));
+			returnString = returnString.concat(getFormattedTaskDetail(task, 0, true, meta));
+			returnString = returnString.concat(getSubTasks(tasks, task.id, 1, meta));
 		})
 
 	} else {
 		tasks.forEach(t => {
 			// show the tasks, inlcude a subtask indicator (since subtask display is disabled)
-			returnString = returnString.concat(getFormattedTaskDetail(t, 0, true));
+			returnString = returnString.concat(getFormattedTaskDetail(t, 0, true, meta));
 		})
 	}
 
@@ -189,21 +189,21 @@ async function callTasksApi(api: TodoistApi, filter: string): Promise<Task[]> {
 	return tasks;
 }
 
-function getSubTasks(subtasks: Task[], parentId: string, indent: number): string {
+function getSubTasks(subtasks: Task[], parentId: string, indent: number, meta: string): string {
 	let returnString = "";
 	const filtered = subtasks.filter(sub => sub.parentId == parentId);
 	filtered.forEach(st => {
-		returnString = returnString.concat(getFormattedTaskDetail(st, indent, false));
-		returnString = returnString.concat(getSubTasks(subtasks, st.id ,indent+1))
+		returnString = returnString.concat(getFormattedTaskDetail(st, indent, false, meta));
+		returnString = returnString.concat(getSubTasks(subtasks, st.id ,indent+1, meta))
 	})
 	return returnString;
 }
 
-function getFormattedTaskDetail(task: Task, indent: number, showSubtaskSymbol: boolean): string {	
+function getFormattedTaskDetail(task: Task, indent: number, showSubtaskSymbol: boolean, meta: string): string {	
 	const tabs = "\t".repeat(indent);
 	const subtaskIndicator = (showSubtaskSymbol && task.parentId != null) ? "⮑ " : "";
 
-	return `${tabs}- [ ] ${subtaskIndicator}${task.content} #todo \n`;
+	return `${tabs}- [ ] ${subtaskIndicator}${task.content} ${meta}\n`;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -25,7 +25,7 @@ function migrateToV1(settings: TodoistSettingV0) : TodoistSettingV1 {
 		enableAutomaticReplacement: settings.enableAutomaticReplacement,
 		templateString: settings.templateString,
 		excludedDirectories: settings.excludedDirectories,
-		keywordToTodoistQuery: [{keyword: settings.templateString, todoistQuery: settings.todoistQuery}],
+		keywordToTodoistQuery: [{keyword: settings.templateString, todoistQuery: settings.todoistQuery, meta: ''}],
 		settingsVersion: 1
 	};
 }

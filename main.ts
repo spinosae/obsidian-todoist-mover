@@ -219,6 +219,17 @@ class TodoistPluginSettingTab extends PluginSettingTab {
 						})
 						.inputEl.addClass("todoist-query-setting")
 					)
+					.addText(text => text
+						.setPlaceholder("#todo")
+						.setValue(
+							this.plugin.settings.keywordToTodoistQuery[index].meta
+						)
+						.onChange(async (value) => {
+							this.plugin.settings.keywordToTodoistQuery[index].meta = value;
+							await this.plugin.saveSettings();
+						})
+						.inputEl.addClass("todoist-query-setting")
+					)
 					.addExtraButton(eb => {
 						eb.setIcon("cross")
 							.setTooltip("Delete")
@@ -244,7 +255,8 @@ class TodoistPluginSettingTab extends PluginSettingTab {
 					.onClick(async () => {
 						this.plugin.settings.keywordToTodoistQuery.push({
 							keyword: "",
-							todoistQuery: ""
+							todoistQuery: "",
+							meta: "",
 						});
 						await this.plugin.saveSettings();
 						this.display();
