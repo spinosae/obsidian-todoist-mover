@@ -1,7 +1,7 @@
 {
-	"name": "todoist-text",
+	"name": "todoist-mover",
 	"version": "1.5.0",
-	"description": "This obsidian plugin integrates your Todoist tasks with markdown checkboxes.\n\n",
+	"description": "This obsidian plugin import tasks from Todoist and close them in-situ, effectively using Todoist as aggregator and staging area for tasks\n\n",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",

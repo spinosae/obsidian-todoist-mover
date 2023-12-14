@@ -1,37 +1,30 @@
-# Todoist Text - Obsidian Plugin
+# Todoist Mover - Obsidian Plugin
 
-This obsidian plugin integrates your Todoist tasks with markdown checkboxes in a text-centric approach.
+This obsidian plugin import tasks from Todoist and close them in-situ, effectively using Todoist as aggregator and staging area for tasks.
 
-Demo: ![demo](https://raw.githubusercontent.com/wesmoncrief/obsidian-todoist-text/master/demo.gif)
+Due to Obsidian's offline nature, it lacks the ability to gather tasks from other services, e.g. creating tasks from an email or a Slack message. Todoist, on the other hand has great integrations. This plugin combines the best of both worlds. Here is the workflow:
+1. The user gathers tasks via Todoist
+2. The user offloads Todoist tasks to Obsidian via this plugin, and manages them in Obsidian
+3. Rinse and repeat
+
+> [!WARNING]
+> This plugin closes original Todoist tasks after importing them.
+
+> [!IMPORTANT]
+> This is an opinionated plugin for a specific workflow, use it only if it suits your needs.
 
 # Usage
 1. Ensure you understand the security implications (see Security section of this file)
-2. Install this plugin (Todoist Text) through Obsidian and enable it
+2. Install this plugin (Todoist Mover) through Obsidian and enable it
 3. Enter your Todoist API token in the plugin settings, as explained there
 4. Read below sections to learn how to manipulate tasks
 
-## Automatic creation of task list
+## Importing tasks from Todoist
 Executing the command "Todoist Text: Replace keyword with todos" will search the currently open file and replace your keyword (configurable in the settings) with your todos from Todoist. The keyword will use your chosen [filter definition](https://todoist.com/help/articles/introduction-to-filters), which allows you to control exactly what tasks will be shown.
 
 You can configure multiple keywords, each corresponding to a separate Todoist filter definition.
 
-You can enable automatic replacement of the keyword with todos in the settings, so you won't have to manually run the "Todoist Text: Replace keyword with todos" command.
-
-If you want to use a template file (e.g. for Daily Notes) and you have automatic replacement of your keyword enabled, you will find that your template file itself would have its keyword get replaced with todos. To prevent this, you can add your template folder to the "Excluded Folders" in the settings. Then, you can just place your keyword in the template file, and the files that it generates should automatically replace the keyword with your todos.
-
-## Marking tasks as complete and re-opening
-When your cursor is on the line of a Todo created by this plugin, executing the command "Todoist Text: Toggle todoist task" will complete that task on Todoist and check off the task on your local file.
-
-You will likely want to use the `<Cmd>-<Enter>` hot key to check off tasks. To do this, go to the Settings -> Hotkeys. Find the command "Todoist Text: Toggle todoist task", and set the hot key as desired. If you set the hot key to `<Cmd>-<Enter>`, be sure to remove `<Cmd>-<Enter>` from its default ("Toggle Checklist Status"). 
-
-You can use the "Todoist Text: Toggle todoist task" command/hot key for any check list item, even if it is unrelated to Todoist. Under the hood, the command will check the suffix of the checklist item, and if it contains a Todoist URL, it will update that todo on Todoist. If it does not end with a Todoist URL, it will simply check/uncheck the line locally.
-
-Clicking a checklist box with the mouse is currently not supported.
-
-## Adding/updating tasks
-This plugin currently does not support adding tasks to Todoist. Until then, I recommend using the Todoist desktop app - it has a global shortcut that can quickly add a task from anywhere on your computer.
-
-This plugin does not automatically update your local files based on remote changes to Todoist tasks. This may be supported later, please reach out via a GitHub issue if this would be useful to you.
+You can also create a macro with [quickadd](https://github.com/chhoumann/quickadd) to insert the keyword and replace them in a single step.
 
 ## Security 
 This plugin stores your Todoist API token in plain text in your .obsidian/plugins folder. Anyone with your Todoist API token could access and manipulate all of your Todoist data. Ensure that you are not syncing/sharing your .obsidian/plugins folder for security purposes. Use this plugin at your own risk.
@@ -44,4 +37,4 @@ See the [changelog](CHANGELOG.md) for recent changes.
 I'm actively creating new features, so be sure to "watch" this repository (with the GitHub button near the top of the screen) to get notified so that you'll know when to update.
 
 ## Attribution
-I copied the 'folder suggest' settings feature from https://github.com/liamcain/obsidian-periodic-notes - thanks!
+- This is a fork of https://github.com/wesmoncrief/obsidian-todoist-text
