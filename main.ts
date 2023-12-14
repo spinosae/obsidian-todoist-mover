@@ -1,24 +1,14 @@
-import {App, ButtonComponent, Editor, MarkdownView, Plugin, PluginSettingTab, Setting} from 'obsidian';
-import {toggleServerTaskStatus, updateFileFromServer} from "./src/updateFileFromServer";
+import {App, ButtonComponent, Plugin, PluginSettingTab, Setting} from 'obsidian';
+import {updateFileFromServer} from "./src/updateFileFromServer";
 import {FolderSuggest} from "./src/suggest/folderSuggester";
 import {migrateSettings} from "./src/settingsMigrator";
 import {DEFAULT_SETTINGS, TodoistSettings} from "./src/DefaultSettings";
 
 export default class TodoistPlugin extends Plugin {
 	settings: TodoistSettings;
-	hasIntervalFailure: boolean = false;
+	hasIntervalFailure = false;
 	async onload() {
 		await this.loadSettings();
-
-		this.addCommand({
-			id: 'toggle-todoist-task',
-			name: 'Toggle todoist task',
-			editorCallback: (editor: Editor, view: MarkdownView) => {
-				toggleServerTaskStatus(editor, this.settings);
-				// @ts-ignore undocumented but was recommended to use here - https://github.com/obsidianmd/obsidian-releases/pull/768#issuecomment-1038441881
-				view.app.commands.executeCommandById("editor:toggle-checklist-status")
-			}
-		});
 
 		this.addCommand({
 			id: 'todoist-task-pull',
@@ -76,7 +66,7 @@ export default class TodoistPlugin extends Plugin {
 	}
 
 	async loadSettings() {
-		let storedSettings = await this.loadData() ?? DEFAULT_SETTINGS;
+		const storedSettings = await this.loadData() ?? DEFAULT_SETTINGS;
 		this.settings = migrateSettings(storedSettings);
 		await this.saveSettings();
 	}
@@ -98,11 +88,10 @@ class TodoistPluginSettingTab extends PluginSettingTab {
 		const {containerEl} = this;
 
 		containerEl.empty();
-		containerEl.createEl('h1', {text: 'Todoist Text'});
-		containerEl.createEl('a', {text: 'Important - see usage instructions', href: 'https://github.com/wesmoncrief/obsidian-todoist-text/tree/master#readme'});
+		containerEl.createEl('h1', {text: 'Todoist Mover'});
+		containerEl.createEl('a', {text: 'Important - see usage instructions', href: 'https://github.com/spinosae/obsidian-todoist-mover/tree/master#readme'});
 
 		this.addApiKeySetting(containerEl);
-		this.addEnableAutomaticReplacementSetting(containerEl);
 		this.addIncludeSubttasksSetting(containerEl);
 		this.addKeywordTodoistQuerySetting(containerEl);
 		this.addExcludedDirectoriesSetting(containerEl);

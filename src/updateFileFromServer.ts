@@ -72,7 +72,7 @@ export async function toggleServerTaskStatus(e: Editor, settings: TodoistSetting
 
 				if (tabCount > actionedTaskTabCount) {
 					const replacedText = lineText.replace("- [ ]", "- [x]");
-					if (replacedText != lineText) { subtasksClosed++};
+					if (replacedText != lineText) { subtasksClosed++}
 					e.setLine(line, replacedText);
 				}
 			}
@@ -99,7 +99,7 @@ export async function toggleServerTaskStatus(e: Editor, settings: TodoistSetting
 
 				if (tabCount < actionedTaskTabCount) {
 					const replacedText = lineText.replace("- [X]", "- [ ]").replace("- [x]", "- [ ]");
-					if (replacedText != lineText) { parentTasksOpened++};
+					if (replacedText != lineText) { parentTasksOpened++}
 					e.setLine(line, replacedText);
 				}
 
@@ -134,14 +134,14 @@ async function getServerData(todoistQuery: string, authToken: string, showSubtas
 	let returnString = "";
 	if (showSubtasks) {
 		// work through all the parent tasks
-		let parentTasks = tasks.filter(task => task.parentId == null);
+		const parentTasks = tasks.filter(task => task.parentId == null);
 		parentTasks.forEach(task => {
 			returnString = returnString.concat(getFormattedTaskDetail(task, 0, false));
 			returnString = returnString.concat(getSubTasks(tasks, task.id, 1));
 		})
 
 		// determine subtasks that have a parent that wasn't returned in the query
-		let subtasks = tasks.filter(task => task.parentId != null);
+		const subtasks = tasks.filter(task => task.parentId != null);
 		const orphans = subtasks.filter(st => !parentTasks.contains(st));
 
 		// show the orphaned subtasks with a subtask indicator
@@ -191,7 +191,7 @@ async function callTasksApi(api: TodoistApi, filter: string): Promise<Task[]> {
 
 function getSubTasks(subtasks: Task[], parentId: string, indent: number): string {
 	let returnString = "";
-	let filtered = subtasks.filter(sub => sub.parentId == parentId);
+	const filtered = subtasks.filter(sub => sub.parentId == parentId);
 	filtered.forEach(st => {
 		returnString = returnString.concat(getFormattedTaskDetail(st, indent, false));
 		returnString = returnString.concat(getSubTasks(subtasks, st.id ,indent+1))
@@ -206,7 +206,8 @@ function getFormattedTaskDetail(task: Task, indent: number, showSubtaskSymbol: b
 	return `${tabs}- [ ] ${subtaskIndicator}${task.content} #todo \n`;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getTaskDescription(description: string, indent: number): string {
-	let tabs = "\t".repeat(indent);
+	const tabs = "\t".repeat(indent);
 	return description.length === 0 ? "" : `\n${tabs}\t- ${description.trim().replace(/(?:\r\n|\r|\n)+/g, '\n\t- ')}`;
 }
