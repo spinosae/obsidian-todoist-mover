@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/spinosae/obsidian-todoist-text/compare/1.5.0...1.6.0) (2023-12-14)
+
+
+### Features
+
+* allow extra metadata for imported tasks ([52debca](https://github.com/spinosae/obsidian-todoist-text/commit/52debcac4ac78f255671c94f8679abd4324a5ceb))
+
 ## 1.5.0 (2023-12-13)
 
 
