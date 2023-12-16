@@ -1,10 +1,10 @@
 {
-	"id": "todoist-text",
-	"name": "Todoist Text",
+	"id": "todoist-mover",
+	"name": "Todoist Mover",
 	"version": "1.6.0",
 	"minAppVersion": "0.12.0",
-	"description": "This obsidian plugin integrates your Todoist tasks with markdown checkboxes.",
-	"author": "wesmoncrief",
-	"authorUrl": "https://github.com/wesmoncrief/obsidian-todoist-text",
+	"description": "This obsidian plugin moves tasks from Todoist.",
+	"author": "spinosae",
+	"authorUrl": "https://github.com/spinosae/obsidian-todoist-mover",
 	"isDesktopOnly": false
 }
