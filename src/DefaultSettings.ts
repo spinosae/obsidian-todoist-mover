@@ -1,27 +1,22 @@
 export interface TodoistSettings {
 	settingsVersion: number;
-	excludedDirectories: string[];
 	// can't use a dictionary/object because it doesn't have first-class support
 	// for indexing, which is needed for settings manipulation/persistence
-	keywordToTodoistQuery: keywordTodoistQuery[];
+	taskQuery: todoistQuery;
 	authToken: string;
-	enableAutomaticReplacement: boolean;
 	showSubtasks: boolean;
 	// never rely on adding a new default value. Any change should entail bumping the settingsVersion
 	// and adding a settings migration
 }
 
-export interface keywordTodoistQuery {
-	keyword: string;
-	todoistQuery: string;
+export interface todoistQuery {
+	filter: string;
 	meta: string;
 }
 
 export const DEFAULT_SETTINGS: TodoistSettings = {
 	settingsVersion: 2,
-	excludedDirectories: [],
-	keywordToTodoistQuery: [{keyword: "@@TODOIST@@", todoistQuery: "today|overdue", meta: ""}],
+	taskQuery: { filter: "#Inbox", meta: "" },
 	authToken: "TODO - get your auth token",
-	enableAutomaticReplacement: true,
-	showSubtasks: true
-}
+	showSubtasks: true,
+};
