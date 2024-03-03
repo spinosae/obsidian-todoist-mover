@@ -80,22 +80,19 @@ class TodoistPluginSettingTab extends PluginSettingTab {
 
 	private addKeywordTodoistQuerySetting(containerEl: HTMLElement) {
 		// todo add warning/stop if multiple same keywords
-		containerEl.createEl("h2", { text: "Task filter" });
 		const filterDescription = document.createDocumentFragment();
 		filterDescription.append(
-			"This plugin will fetch tasks matching specified filters. Read more on",
+			"This plugin will fetch tasks matching specified filters. Read more on ",
 			containerEl.createEl("a", null, (link) => {
 				link.href =
 					"https://todoist.com/help/articles/introduction-to-filters";
 				link.innerText = "filter definition.";
-			}),
-			"In addition, you could specify arbitrary text to be appended to the imported tasks. E.g. `#imported`"
+			})
 		);
-		new Setting(containerEl).setDesc(filterDescription);
 
-		const div = this.containerEl.createEl("div");
-		div.addClass("todoist-setting-div");
 		new Setting(containerEl)
+			.setName("Todoist task filter")
+			.setDesc(filterDescription)
 			.addText((text) =>
 				text
 					.setPlaceholder("#Inbox")
@@ -105,6 +102,12 @@ class TodoistPluginSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					})
 					.inputEl.addClass("todoist-query-setting")
+			);
+
+		new Setting(containerEl)
+			.setName("Meta")
+			.setDesc(
+				"Arbitrary text to be appended to the imported tasks. E.g. `#imported`"
 			)
 			.addText((text) =>
 				text
@@ -116,7 +119,6 @@ class TodoistPluginSettingTab extends PluginSettingTab {
 					})
 					.inputEl.addClass("todoist-query-setting")
 			);
-		div.appendChild(this.containerEl.lastChild);
 	}
 
 	private addApiKeySetting(containerEl: HTMLElement) {
