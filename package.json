@@ -1,6 +1,6 @@
 {
 	"name": "todoist-mover",
-	"version": "1.6.1",
+	"version": "1.6.2",
 	"description": "This obsidian plugin import tasks from Todoist and close them in-situ, effectively using Todoist as aggregator and staging area for tasks\n\n",
 	"main": "main.js",
 	"scripts": {
