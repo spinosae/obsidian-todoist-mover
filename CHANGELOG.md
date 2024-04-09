@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/spinosae/obsidian-todoist-mover/compare/2.0.0...2.0.1) (2024-04-09)
+
+
+### Features
+
+* allow manual trigger of release ([c3caa50](https://github.com/spinosae/obsidian-todoist-mover/commit/c3caa50b2b935b482547f16d0a51f2571743b427))
+
 ## [2.0.0](https://github.com/spinosae/obsidian-todoist-mover/compare/1.6.1...2.0.0) (2024-04-09)
 
 ### [1.6.2](https://github.com/spinosae/obsidian-todoist-mover/compare/1.6.1...1.6.2) (2024-04-09)
