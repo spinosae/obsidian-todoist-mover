@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.2](https://github.com/spinosae/obsidian-todoist-mover/compare/2.0.1...2.0.2) (2025-04-15)
+
+
+### Bug Fixes
+
+* todoist V2 close API broken ([2287457](https://github.com/spinosae/obsidian-todoist-mover/commit/2287457497c4db0c68f82518337f0116e2a1bdb2))
+
 ### [2.0.1](https://github.com/spinosae/obsidian-todoist-mover/compare/2.0.0...2.0.1) (2024-04-09)
 
 
