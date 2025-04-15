@@ -11,7 +11,7 @@ if you want to view the source, please visit the github repository of this plugi
 
 const prod = (process.argv[2] === 'production');
 
-esbuild.build({
+const buildOptions = {
 	banner: {
 		js: banner,
 	},
@@ -43,10 +43,20 @@ esbuild.build({
 		'@codemirror/view',
 		...builtins],
 	format: 'cjs',
-	watch: !prod,
 	target: 'es2016',
 	logLevel: "info",
 	sourcemap: prod ? false : 'inline',
 	treeShaking: true,
 	outfile: 'main.js',
-}).catch(() => process.exit(1));
+};
+
+if (prod) {
+	// Just build once for production
+	esbuild.build(buildOptions).catch(() => process.exit(1));
+} else {
+	// For development, use the context API for watch mode
+	esbuild.context(buildOptions).then(context => {
+		// Enable watch mode
+		return context.watch();
+	}).catch(() => process.exit(1));
+}

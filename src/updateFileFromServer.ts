@@ -63,7 +63,7 @@ export async function getServerData(
 async function callTasksApi(api: TodoistApi, filter: string): Promise<Task[]> {
 	let tasks: Task[];
 	try {
-		tasks = await api.getTasks({ filter: filter });
+		tasks = (await api.getTasksByFilter({ query: filter })).results;
 	} catch (e) {
 		let errorMsg: string;
 		switch (e.httpStatusCode) {
