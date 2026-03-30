@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/spinosae/obsidian-todoist-mover/compare/2.0.2...2.1.0) (2026-03-30)
+
+
+### Features
+
+* include task created time in Obsidian Tasks plugin format [created:: YYYY-MM-DD] ([a0d0e3b](https://github.com/spinosae/obsidian-todoist-mover/commit/a0d0e3b595fe1b295c66532ddb8098750d69465d))
+
 ### [2.0.2](https://github.com/spinosae/obsidian-todoist-mover/compare/2.0.1...2.0.2) (2025-04-15)
 
 
