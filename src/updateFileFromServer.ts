@@ -114,7 +114,10 @@ function getFormattedTaskDetail(
 	const subtaskIndicator =
 		showSubtaskSymbol && task.parentId != null ? "⮑ " : "";
 
-	return `${tabs}- [ ] ${subtaskIndicator}${task.content} ${meta}\n`;
+	const createdDate = task.createdAt.slice(0, 10);
+	const createdMeta = `[created:: ${createdDate}]`;
+	const metaSuffix = meta ? `${meta} ${createdMeta}` : createdMeta;
+	return `${tabs}- [ ] ${subtaskIndicator}${task.content} ${metaSuffix}\n`;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
