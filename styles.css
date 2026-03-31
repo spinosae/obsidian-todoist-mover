@@ -9,3 +9,24 @@
 .todoist-query-setting {
 	width: 45%;
 }
+
+.todoist-wikilink-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 0.35rem;
+	padding: 0 0.3rem;
+	font-size: 0.7em;
+	line-height: 1.4;
+	vertical-align: middle;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 120ms ease-in-out;
+}
+
+.cm-line.todoist-wikilink-line:hover .todoist-wikilink-button,
+.cm-line.todoist-wikilink-line.cm-activeLine .todoist-wikilink-button,
+.todoist-wikilink-button:focus-visible {
+	opacity: 1;
+	pointer-events: auto;
+}

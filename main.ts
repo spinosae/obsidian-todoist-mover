@@ -6,14 +6,19 @@ import {
 	PluginSettingTab,
 	Setting,
 } from "obsidian";
+import { Extension } from "@codemirror/state";
 import { getServerData } from "./src/updateFileFromServer";
-import { DEFAULT_SETTINGS, TodoistSettings } from "./src/DefaultSettings";
+import { TodoistSettings, migrateSettings } from "./src/DefaultSettings";
+import { createWikilinkEditorExtension } from "./src/wikilinkEditorExtension";
 
 export default class TodoistPlugin extends Plugin {
 	settings: TodoistSettings;
 	hasIntervalFailure = false;
+	private readonly helperEditorExtensions: Extension[] = [];
 	async onload() {
 		await this.loadSettings();
+		this.syncEditorExtensions();
+		this.registerEditorExtension(this.helperEditorExtensions);
 
 		this.addCommand({
 			id: "todoist-task-pull",
@@ -46,13 +51,21 @@ export default class TodoistPlugin extends Plugin {
 	onunload() {}
 
 	async loadSettings() {
-		const storedSettings = (await this.loadData()) ?? DEFAULT_SETTINGS;
-		this.settings = storedSettings;
+		this.settings = migrateSettings(await this.loadData());
 		await this.saveSettings();
 	}
 
 	async saveSettings() {
 		await this.saveData(this.settings);
+		this.syncEditorExtensions();
+		this.app.workspace.updateOptions();
+	}
+
+	private syncEditorExtensions() {
+		this.helperEditorExtensions.length = 0;
+		if (this.settings.enableTextToWikilinkHelper) {
+			this.helperEditorExtensions.push(createWikilinkEditorExtension());
+		}
 	}
 }
 
@@ -69,13 +82,36 @@ class TodoistPluginSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 		containerEl.createEl("h1", { text: "Todoist Mover" });
-		containerEl.createEl("a", {
-			text: "Important - see usage instructions",
-			href: "https://github.com/spinosae/obsidian-todoist-mover/tree/master#readme",
+		const usageDescription = containerEl.createDiv("setting-item-description");
+		usageDescription.appendText("Need setup steps or workflow details? See the ");
+		usageDescription.createEl("a", {
+			text: "usage guide",
+			href: "https://github.com/spinosae/obsidian-todoist-mover/tree/master#usage",
 		});
+		usageDescription.appendText(".");
 
+		containerEl.createEl("h2", { text: "Todoist Import Settings" });
 		this.addApiKeySetting(containerEl);
 		this.addKeywordTodoistQuerySetting(containerEl);
+		this.addHelperFunctionsSetting(containerEl);
+	}
+
+	private addHelperFunctionsSetting(containerEl: HTMLElement) {
+		containerEl.createEl("h2", { text: "Helper Funtions" });
+
+		new Setting(containerEl)
+			.setName("Text to wikilink")
+			.setDesc(
+				"Show an inline helper button for converting the first eligible text block on the current line into a wikilink."
+			)
+			.addToggle((toggle) =>
+				toggle
+					.setValue(this.plugin.settings.enableTextToWikilinkHelper)
+					.onChange(async (value) => {
+						this.plugin.settings.enableTextToWikilinkHelper = value;
+						await this.plugin.saveSettings();
+					})
+			);
 	}
 
 	private addKeywordTodoistQuerySetting(containerEl: HTMLElement) {
