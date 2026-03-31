@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## Unreleased
+
+### Features
+
+* add an inline text-to-wikilink helper with hover/active-line visibility and a settings toggle
+
+### Documentation
+
+* reorganize settings copy, document the wikilink helper workflow, and clarify release steps
+
 ## [2.1.0](https://github.com/spinosae/obsidian-todoist-mover/compare/2.0.2...2.1.0) (2026-03-30)
 
 

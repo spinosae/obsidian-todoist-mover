@@ -1,29 +1,66 @@
 # Todoist Mover - Obsidian Plugin
 
-This obsidian plugin import tasks from Todoist and close them in-situ, effectively using Todoist as aggregator and staging area for tasks.
+Import Todoist tasks into Obsidian, then close the original Todoist tasks after import.
 
-Due to Obsidian's offline nature, it lacks the ability to gather tasks from other services, e.g. creating tasks from an email or a Slack message. Todoist, on the other hand has great integrations. This plugin combines the best of both worlds. Here is the workflow:
-1. The user gathers tasks via Todoist
-2. The user offloads Todoist tasks to Obsidian via this plugin, and manages them in Obsidian
-3. Rinse and repeat
+This plugin is built for a specific workflow:
+1. Capture tasks in Todoist from email, chat, and other integrations.
+2. Pull those tasks into Obsidian when you are ready to plan.
+3. Manage the work in Obsidian from there.
 
 > [!WARNING]
-> This plugin closes original Todoist tasks after importing them.
+> Importing tasks closes the matching Todoist tasks immediately after they are pulled into Obsidian.
 
 > [!IMPORTANT]
-> This is an opinionated plugin for a specific workflow, use it only if it suits your needs.
+> The plugin is intentionally opinionated. Use it only if that workflow matches how you manage tasks.
 
-# Usage
-1. Ensure you understand the security implications (see Security section of this file)
-2. Install this plugin (Todoist Mover) through Obsidian and enable it
-3. Enter your Todoist API token in the plugin settings, as explained there
-4. Read below sections to learn how to manipulate tasks
+## Usage
 
-## Importing tasks from Todoist
-Executing the command "Todoist Text: Fetch tasks" will insert todos from Todoist at your cursor location. The keyword will use your chosen [filter definition](https://todoist.com/help/articles/introduction-to-filters), which allows you to control exactly what tasks will be shown.
+### Before you start
+1. Install and enable `Todoist Mover` in Obsidian.
+2. Open the plugin settings.
+3. In `Todoist Import Settings`, add your Todoist API token.
+4. Set the Todoist filter and optional metadata suffix you want applied to imported tasks.
 
-## Security 
-This plugin stores your Todoist API token in plain text in your .obsidian/plugins folder. Anyone with your Todoist API token could access and manipulate all of your Todoist data. Ensure that you are not syncing/sharing your .obsidian/plugins folder for security purposes. Use this plugin at your own risk.
+> [!TIP]
+> Todoist filters support powerful saved queries. See Todoist’s official [filter definition documentation](https://todoist.com/help/articles/introduction-to-filters).
+
+### Import tasks from Todoist
+1. Open the note where you want the tasks inserted.
+2. Place the cursor where the imported tasks should go.
+3. Run the command `Fetch tasks`.
+4. Review the inserted checklist items in Obsidian.
+
+The plugin inserts tasks at the cursor as markdown checklist items and appends the configured metadata. If enabled, subtasks are preserved in the imported structure.
+
+### Use the text-to-wikilink helper
+1. Open any markdown note in source mode or live preview.
+2. Hover a line or place the cursor on the line.
+3. Click the inline link helper icon shown after the line text.
+4. The first eligible text block on that line is converted to a wikilink like `[[text]]`.
+
+The helper skips markdown prefixes, existing links, frontmatter, and Obsidian tags so that only plain text is wrapped.
+
+## Verification
+
+- Running `Fetch tasks` inserts Todoist items at the cursor.
+- Imported items include your configured metadata.
+- When `Text to wikilink` is enabled in `Helper Funtions`, the inline helper appears only on the hovered or active line.
+
+## Security
+
+This plugin stores your Todoist API token in plain text in your `.obsidian/plugins` folder. Anyone with that token can access and manipulate your Todoist data.
+
+> [!WARNING]
+> Do not sync or share your `.obsidian/plugins` folder unless you are comfortable exposing the token.
+
+## Release notes
+
+To prepare a release locally:
+1. Run `npm test`.
+2. Run `npm run build`.
+3. Run `npm run release`.
+4. Push the release commit and tags with `git push --follow-tags origin master`.
 
 ## Attribution
-- This is a fork of https://github.com/wesmoncrief/obsidian-todoist-text
+
+- Forked from https://github.com/wesmoncrief/obsidian-todoist-text
