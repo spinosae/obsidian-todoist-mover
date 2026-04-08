@@ -5,7 +5,7 @@ export async function getServerData(
 	todoistQuery: string,
 	authToken: string,
 	showSubtasks: boolean,
-	meta: string
+	meta: string,
 ): Promise<string> {
 	const api = new TodoistApi(authToken);
 
@@ -13,7 +13,7 @@ export async function getServerData(
 
 	if (tasks.length === 0) {
 		new Notice(
-			`Todoist text: You have no tasks matching filter "${todoistQuery}"`
+			`Todoist text: You have no tasks matching filter "${todoistQuery}"`,
 		);
 	}
 
@@ -23,10 +23,10 @@ export async function getServerData(
 		const parentTasks = tasks.filter((task) => task.parentId == null);
 		parentTasks.forEach((task) => {
 			returnString = returnString.concat(
-				getFormattedTaskDetail(task, 0, false, meta)
+				getFormattedTaskDetail(task, 0, false, meta),
 			);
 			returnString = returnString.concat(
-				getSubTasks(tasks, task.id, 1, meta)
+				getSubTasks(tasks, task.id, 1, meta),
 			);
 		});
 
@@ -37,17 +37,17 @@ export async function getServerData(
 		// show the orphaned subtasks with a subtask indicator
 		orphans.forEach((task) => {
 			returnString = returnString.concat(
-				getFormattedTaskDetail(task, 0, true, meta)
+				getFormattedTaskDetail(task, 0, true, meta),
 			);
 			returnString = returnString.concat(
-				getSubTasks(tasks, task.id, 1, meta)
+				getSubTasks(tasks, task.id, 1, meta),
 			);
 		});
 	} else {
 		tasks.forEach((t) => {
 			// show the tasks, inlcude a subtask indicator (since subtask display is disabled)
 			returnString = returnString.concat(
-				getFormattedTaskDetail(t, 0, true, meta)
+				getFormattedTaskDetail(t, 0, true, meta),
 			);
 		});
 	}
@@ -89,16 +89,16 @@ function getSubTasks(
 	subtasks: Task[],
 	parentId: string,
 	indent: number,
-	meta: string
+	meta: string,
 ): string {
 	let returnString = "";
 	const filtered = subtasks.filter((sub) => sub.parentId == parentId);
 	filtered.forEach((st) => {
 		returnString = returnString.concat(
-			getFormattedTaskDetail(st, indent, false, meta)
+			getFormattedTaskDetail(st, indent, false, meta),
 		);
 		returnString = returnString.concat(
-			getSubTasks(subtasks, st.id, indent + 1, meta)
+			getSubTasks(subtasks, st.id, indent + 1, meta),
 		);
 	});
 	return returnString;
@@ -108,13 +108,13 @@ function getFormattedTaskDetail(
 	task: Task,
 	indent: number,
 	showSubtaskSymbol: boolean,
-	meta: string
+	meta: string,
 ): string {
 	const tabs = "\t".repeat(indent);
 	const subtaskIndicator =
 		showSubtaskSymbol && task.parentId != null ? "⮑ " : "";
 
-	const createdDate = task.createdAt.slice(0, 10);
+	const createdDate = task.createdAt;
 	const createdMeta = `[created:: ${createdDate}]`;
 	const metaSuffix = meta ? `${meta} ${createdMeta}` : createdMeta;
 	return `${tabs}- [ ] ${subtaskIndicator}${task.content} ${metaSuffix}\n`;
