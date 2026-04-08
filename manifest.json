@@ -1,7 +1,7 @@
 {
 	"id": "todoist-mover",
 	"name": "Todoist Mover",
-	"version": "2.2.2",
+	"version": "2.3.0",
 	"minAppVersion": "0.13.0",
 	"description": "This obsidian plugin moves tasks from Todoist.",
 	"author": "spinosae",
